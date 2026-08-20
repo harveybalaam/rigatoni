@@ -1,7 +1,9 @@
 {
   "name": "electron-template",
+  "description": "Electron based mini macOS app for pasting frequently used values",
+  "author": "Harvey Balaam",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist-electron/main",
   "scripts": {
