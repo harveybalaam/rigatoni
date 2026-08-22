@@ -1,19 +1,15 @@
-import { useState } from "react";
+import SearchBar from "./Components/SearchBar/SearchBar";
+import { ChevronUpIcon } from "lucide-react";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function App() {
   return (
-    <div className="bg-base h-screen w-screen flex flex-col align-middle items-center gap-4 pt-4">
-      <h1 className="text-4xl text-primary">Hello, World</h1>
-      <button
-        className="bg-lavender cursor-pointer px-4 py-0.5 rounded-sm min-w-24"
-        onClick={() => setCount((prev) => prev + 1)}
-      >
-        {count}
-      </button>
+    <div className="bg-mantle h-screen w-screen flex flex-col">
+      <div className="flex items-center justify-center text-surface-2">
+        <button className="cursor-pointer px-16 text-center">
+          <ChevronUpIcon />
+        </button>
+      </div>
+      <SearchBar />
     </div>
   );
 }
-
-export default App;

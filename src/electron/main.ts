@@ -1,16 +1,33 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, screen } from "electron";
 import path from "path";
 
 const appPath = path.join(app.getAppPath(), "/dist-react/index.html");
 
 const createWindow = () => {
+  const displaySize = screen.getPrimaryDisplay().workAreaSize;
+  const windowWidth = 448;
+  const windowHeight = 80;
+
+  // center
+  const offsetX = Math.ceil(displaySize.width / 2 - windowWidth / 2);
+
+  const offsetY = displaySize.height - 64;
+
   const window = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: windowWidth,
+    height: windowHeight,
+    x: offsetX,
+    y: offsetY,
+    backgroundColor: "#1e1e2e", // --color-base
+    frame: false,
+    hasShadow: false,
+    transparent: true,
+    alwaysOnTop: true,
+    acceptFirstMouse: true,
   });
 
   window.loadFile(appPath);
-  window.webContents.openDevTools();
+  // window.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
