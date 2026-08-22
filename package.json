@@ -1,5 +1,5 @@
 {
-  "name": "electron-template",
+  "name": "rigatoni",
   "description": "Electron based mini macOS app for pasting frequently used values",
   "author": "Harvey Balaam",
   "private": true,
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "lucide-react": "^1.33.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwindcss": "^4.3.3"
