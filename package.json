@@ -9,7 +9,8 @@
   "scripts": {
     "dev:react": "vite",
     "dev:electron": "electron .",
-    "build": "tsc -b && vite build",
+    "build:vite": "tsc -b && vite build",
+    "build": "npm run build:vite && npm run transpile:electron",
     "lint": "eslint .",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json"
