@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: JetBrains-Mono;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
 /* Catppuccin Mocha */
 /* https://catppuccin.com */
 @theme {
+  --default-font-family: "JetBrains-Mono";
+
   --color-*: initial;
   --color-rosewater: #f5e0dc;
   --color-flamingo: #f2cdcd;
