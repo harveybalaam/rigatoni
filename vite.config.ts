@@ -9,4 +9,8 @@ export default defineConfig({
     outDir: "dist-react",
   },
   plugins: [react(), tailwindcss()],
+  server: {
+    port: 5123,
+    strictPort: true,
+  },
 });
