@@ -2,11 +2,11 @@ import { SearchIcon } from "lucide-react";
 
 export default function SearchBar() {
   return (
-    <div className="flex grow p-4 bg-base rounded-t-[1.25rem]">
+    <div className="flex grow p-4 bg-base rounded-t-2xl">
       <span className="flex grow gap-2 items-center text-overlay-1">
-        <SearchIcon />
+        <SearchIcon size={20} />
         <input
-          className="text-base/tight placeholder-surface-2 outline-none w-full lh"
+          className="text-sm/tight placeholder-surface-2 placeholder:italic outline-none w-full"
           type="text"
           placeholder="Search something to paste..."
         />
