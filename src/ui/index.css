@@ -8,6 +8,14 @@
   src: url("../assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: JetBrains-Mono;
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/JetBrainsMono-Italic.woff2") format("woff2");
+}
+
 /* Catppuccin Mocha */
 /* https://catppuccin.com */
 @theme {
