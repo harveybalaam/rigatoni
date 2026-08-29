@@ -1,5 +1,6 @@
 import { app, BrowserWindow, screen } from "electron";
 import path from "path";
+import injectCsp from "./utils/inject-csp.ts";
 import isDevEnv from "./utils/is-dev-env.ts";
 
 const appPath = path.join(app.getAppPath(), "/dist-react/index.html");
@@ -36,6 +37,7 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
+  injectCsp();
   createWindow();
 
   app.on("activate", () => {
