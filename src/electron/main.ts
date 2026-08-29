@@ -26,7 +26,7 @@ const createWindow = () => {
     height: windowHeight,
     x: offsetX,
     y: offsetY,
-    backgroundColor: "#1e1e2e", // --color-base
+    backgroundColor: "#00000000", // transparent
     frame: false,
     hasShadow: false,
     transparent: true,
