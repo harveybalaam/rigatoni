@@ -3,7 +3,10 @@
     "strict": true,
     "target": "esnext",
     "module": "nodenext",
+    "rootDir": "..",
     "outDir": "../../dist-electron",
     "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
   },
 }

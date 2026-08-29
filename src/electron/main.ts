@@ -2,8 +2,14 @@ import { app, BrowserWindow, screen } from "electron";
 import path from "path";
 import injectCsp from "./utils/inject-csp.ts";
 import isDevEnv from "./utils/is-dev-env.ts";
+import registerIpcHandlers from "./ipc/index.ts";
 
 const appPath = path.join(app.getAppPath(), "/dist-react/index.html");
+const preloadPath = path.join(
+  appPath,
+  "../..",
+  "/dist-electron/electron/preload.cjs",
+);
 
 const createWindow = () => {
   const displaySize = screen.getPrimaryDisplay().workAreaSize;
@@ -26,6 +32,9 @@ const createWindow = () => {
     transparent: true,
     alwaysOnTop: true,
     acceptFirstMouse: true,
+    webPreferences: {
+      preload: preloadPath,
+    },
   });
 
   if (isDevEnv()) {
@@ -38,6 +47,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   injectCsp();
+  registerIpcHandlers();
   createWindow();
 
   app.on("activate", () => {
