@@ -19,7 +19,7 @@
 /* Catppuccin Mocha */
 /* https://catppuccin.com */
 @theme {
-  --default-font-family: "JetBrains-Mono";
+  --default-font-family: "JetBrains-Mono", monospace, system-ui, sans-serif;
 
   --color-*: initial;
   --color-rosewater: #f5e0dc;
