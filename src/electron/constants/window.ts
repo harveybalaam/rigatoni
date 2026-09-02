@@ -1,0 +1,3 @@
+export const DEFAULT_WINDOW_HEIGHT = 80;
+export const DEFAULT_WINDOW_WIDTH = 448;
+export const DEFAULT_WINDOW_OFFSET_Y = 64;

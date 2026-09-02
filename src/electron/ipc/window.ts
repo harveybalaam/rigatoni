@@ -1,33 +1,29 @@
-import { BrowserWindow, ipcMain, IpcMainEvent } from "electron";
+import { BrowserWindow, ipcMain, IpcMainEvent, screen } from "electron";
 import { IpcChannelWindow } from "../../shared/ipc-channel.ts";
+import {
+  DEFAULT_WINDOW_HEIGHT,
+  DEFAULT_WINDOW_OFFSET_Y,
+} from "../constants/window.ts";
 
-function handleSetIsWindowExpanded(
+function handleSetWindowHeightOffset(
   event: IpcMainEvent,
-  isWindowExpanded: boolean,
+  windowHeightOffset: number,
 ) {
   const window = BrowserWindow.fromWebContents(event.sender);
   if (!window) return;
 
+  const displaySize = screen.getPrimaryDisplay().workAreaSize;
+  const offsetY = displaySize.height - DEFAULT_WINDOW_OFFSET_Y;
+
   const prevBounds = window.getBounds();
-  const expandedHeightDiff = 168;
-
-  if (isWindowExpanded) {
-    window.setBounds({
-      ...prevBounds,
-      y: prevBounds.y - expandedHeightDiff,
-      height: prevBounds.height + expandedHeightDiff,
-    });
-
-    return;
-  }
 
   window.setBounds({
     ...prevBounds,
-    y: prevBounds.y + expandedHeightDiff,
-    height: prevBounds.height - expandedHeightDiff,
+    y: offsetY - windowHeightOffset,
+    height: DEFAULT_WINDOW_HEIGHT + windowHeightOffset,
   });
 }
 
 export default function registerWindowIpcHandlers() {
-  ipcMain.on(IpcChannelWindow.SET_EXPANDED, handleSetIsWindowExpanded);
+  ipcMain.on(IpcChannelWindow.SET_HEIGHT_OFFSET, handleSetWindowHeightOffset);
 }
