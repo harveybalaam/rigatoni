@@ -3,6 +3,11 @@ import path from "path";
 import injectCsp from "./utils/inject-csp.ts";
 import isDevEnv from "./utils/is-dev-env.ts";
 import registerIpcHandlers from "./ipc/index.ts";
+import {
+  DEFAULT_WINDOW_HEIGHT,
+  DEFAULT_WINDOW_WIDTH,
+  DEFAULT_WINDOW_OFFSET_Y,
+} from "./constants/window.ts";
 
 const appPath = path.join(app.getAppPath(), "/dist-react/index.html");
 const preloadPath = path.join(
@@ -13,17 +18,15 @@ const preloadPath = path.join(
 
 const createWindow = () => {
   const displaySize = screen.getPrimaryDisplay().workAreaSize;
-  const windowWidth = 448;
-  const windowHeight = 80;
 
   // center
-  const offsetX = Math.ceil(displaySize.width / 2 - windowWidth / 2);
+  const offsetX = Math.ceil(displaySize.width / 2 - DEFAULT_WINDOW_WIDTH / 2);
 
-  const offsetY = displaySize.height - 64;
+  const offsetY = displaySize.height - DEFAULT_WINDOW_OFFSET_Y;
 
   const window = new BrowserWindow({
-    width: windowWidth,
-    height: windowHeight,
+    height: DEFAULT_WINDOW_HEIGHT,
+    width: DEFAULT_WINDOW_WIDTH,
     x: offsetX,
     y: offsetY,
     backgroundColor: "#00000000", // transparent
