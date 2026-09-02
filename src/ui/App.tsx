@@ -34,10 +34,8 @@ export default function App() {
     if (!dimensions.height) return;
 
     if (isWindowExpanded) {
-      // @ts-expect-error TODO: type safety
       window.appWindow.setHeightOffset(dimensions.height);
     } else {
-      // @ts-expect-error TODO: type safety
       window.appWindow.setHeightOffset(0);
     }
   }, [dimensions, isWindowExpanded]);
