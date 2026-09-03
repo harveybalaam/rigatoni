@@ -1,8 +1,8 @@
-import type { ISnippet } from "../../../../shared/types/snippet";
+import type { Snippet as SnippetSchema } from "../../../../shared/schemas/snippet";
 import Snippet from "../../Snippet";
 
 interface SnippetListSectionProps extends React.PropsWithChildren {
-  snippets: ISnippet[];
+  snippets: SnippetSchema[];
   title: string;
 }
 
