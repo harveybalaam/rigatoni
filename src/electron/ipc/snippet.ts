@@ -4,6 +4,8 @@ import path from "path";
 import { IpcChannelSnippet } from "../../shared/ipc-channel.ts";
 import {
   CreateSnippetResponse,
+  GetAllSnippetsResponse,
+  GetSnippetResponse,
   Snippet,
   SnippetContent,
   snippetContentSchema,
@@ -74,6 +76,43 @@ async function handleCreateSnippet(
   }
 }
 
+async function handleGetSnippetById(
+  _event: IpcMainInvokeEvent,
+  snippetId: Snippet["id"],
+): Promise<GetSnippetResponse> {
+  try {
+    const snippetCollection = await readSnippetsFile();
+
+    const targetSnippet = snippetCollection.snippets?.find(
+      ({ id }) => id === snippetId,
+    );
+
+    return {
+      success: true,
+      snippet: targetSnippet,
+    };
+  } catch {
+    return { success: false };
+  }
+}
+
+async function handleGetAllSnippets(
+  _event: IpcMainInvokeEvent,
+): Promise<GetAllSnippetsResponse> {
+  try {
+    const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
+
+    return {
+      snippets: fetchedSnippets,
+      success: true,
+    };
+  } catch {
+    return { success: false };
+  }
+}
+
 export default function registerSnippetIpcHandlers() {
   ipcMain.handle(IpcChannelSnippet.CREATE, handleCreateSnippet);
+  ipcMain.handle(IpcChannelSnippet.GET, handleGetSnippetById);
+  ipcMain.handle(IpcChannelSnippet.GET_ALL, handleGetAllSnippets);
 }
