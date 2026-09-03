@@ -1,9 +1,9 @@
 import SnippetListSection from "./SnippetListSection";
-import type { ISnippet } from "../../../shared/types/snippet";
+import type { Snippet } from "../../../shared/schemas/snippet";
 import getRecentSnippets from "../../utils/get-recent-snippets";
 
 interface SnippetListProps {
-  snippets: ISnippet[];
+  snippets: Snippet[];
 }
 
 export default function SnippetList({ snippets }: SnippetListProps) {

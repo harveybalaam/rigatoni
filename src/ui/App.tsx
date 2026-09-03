@@ -3,23 +3,23 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
-import type { ISnippet } from "../shared/types/snippet";
+import type { Snippet } from "../shared/schemas/snippet";
 
-const exampleSnippets: ISnippet[] = [
+const exampleSnippets: Snippet[] = [
   {
     id: "1",
-    dateCreated: new Date("2026-09-02").toJSON(),
-    dateLastUpdated: new Date("2026-09-02").toJSON(),
-    dateLastUsed: new Date("2026-09-02").toJSON(),
+    dateCreated: new Date("2026-09-02").toISOString(),
+    dateLastUpdated: new Date("2026-09-02").toISOString(),
+    dateLastUsed: new Date("2026-09-02").toISOString(),
     name: "Test 1",
     pinned: true,
     value: "example",
   },
   {
     id: "2",
-    dateCreated: new Date("2026-09-02").toJSON(),
-    dateLastUpdated: new Date("2026-09-02").toJSON(),
-    dateLastUsed: new Date("2026-09-02").toJSON(),
+    dateCreated: new Date("2026-09-02").toISOString(),
+    dateLastUpdated: new Date("2026-09-02").toISOString(),
+    dateLastUsed: new Date("2026-09-02").toISOString(),
     name: "Test 2",
     pinned: false,
     value: "example",

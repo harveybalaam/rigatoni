@@ -1,7 +1,7 @@
 import { PencilIcon, Trash2Icon } from "lucide-react";
-import type { ISnippet } from "../../../shared/types/snippet";
+import type { Snippet } from "../../../shared/schemas/snippet";
 
-type SnippetProps = Pick<ISnippet, "id" | "name" | "value">;
+type SnippetProps = Pick<Snippet, "id" | "name" | "value">;
 
 export default function Snippet({ name }: SnippetProps) {
   return (
