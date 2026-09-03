@@ -11,6 +11,9 @@ import {
   snippetContentSchema,
   SnippetCollection,
   snippetCollectionSchema,
+  UpdateSnippetResponse,
+  SnippetUpdateBody,
+  snippetUpdateBodySchema,
 } from "../../shared/schemas/snippet.ts";
 
 const snippetsFilePath = path.join(
@@ -111,8 +114,45 @@ async function handleGetAllSnippets(
   }
 }
 
+async function handleUpdateSnippetById(
+  _event: IpcMainInvokeEvent,
+  snippetBody: SnippetUpdateBody,
+  snippetId: Snippet["id"],
+): Promise<UpdateSnippetResponse> {
+  try {
+    const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
+    const parsedSnippetContent = snippetUpdateBodySchema.parse(snippetBody);
+
+    const targetSnippet = fetchedSnippets.find(({ id }) => id === snippetId);
+    if (!targetSnippet) return { success: false };
+
+    const updatedSnippet: Snippet = {
+      ...targetSnippet,
+      ...parsedSnippetContent,
+      dateLastUpdated: new Date().toISOString(),
+    };
+
+    const updatedSnippets = fetchedSnippets.map((snippet) => {
+      if (snippet.id === snippetId) {
+        return updatedSnippet;
+      }
+      return snippet;
+    });
+
+    await writeToSnippetsFile({ snippets: updatedSnippets });
+
+    return {
+      snippet: updatedSnippet,
+      success: true,
+    };
+  } catch {
+    return { success: false };
+  }
+}
+
 export default function registerSnippetIpcHandlers() {
   ipcMain.handle(IpcChannelSnippet.CREATE, handleCreateSnippet);
   ipcMain.handle(IpcChannelSnippet.GET, handleGetSnippetById);
   ipcMain.handle(IpcChannelSnippet.GET_ALL, handleGetAllSnippets);
+  ipcMain.handle(IpcChannelSnippet.UPDATE, handleUpdateSnippetById);
 }
