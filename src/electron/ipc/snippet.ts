@@ -4,6 +4,7 @@ import path from "path";
 import { IpcChannelSnippet } from "../../shared/ipc-channel.ts";
 import {
   CreateSnippetResponse,
+  DeleteSnippetResponse,
   GetAllSnippetsResponse,
   GetSnippetResponse,
   Snippet,
@@ -150,9 +151,33 @@ async function handleUpdateSnippetById(
   }
 }
 
+async function handleDeleteSnippetById(
+  _event: IpcMainInvokeEvent,
+  snippetId: Snippet["id"],
+): Promise<DeleteSnippetResponse> {
+  try {
+    const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
+
+    if (fetchedSnippets.length === 0) {
+      return { success: true };
+    }
+
+    const filteredSnippets = fetchedSnippets.filter(
+      ({ id }) => id !== snippetId,
+    );
+
+    await writeToSnippetsFile({ snippets: filteredSnippets });
+
+    return { success: true };
+  } catch {
+    return { success: false };
+  }
+}
+
 export default function registerSnippetIpcHandlers() {
   ipcMain.handle(IpcChannelSnippet.CREATE, handleCreateSnippet);
   ipcMain.handle(IpcChannelSnippet.GET, handleGetSnippetById);
   ipcMain.handle(IpcChannelSnippet.GET_ALL, handleGetAllSnippets);
   ipcMain.handle(IpcChannelSnippet.UPDATE, handleUpdateSnippetById);
+  ipcMain.handle(IpcChannelSnippet.DELETE, handleDeleteSnippetById);
 }
