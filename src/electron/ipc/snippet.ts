@@ -16,6 +16,7 @@ import {
   SnippetUpdateBody,
   snippetUpdateBodySchema,
 } from "../../shared/schemas/snippet.ts";
+import validateSender from "../utils/validate-sender.ts";
 
 const snippetsFilePath = path.join(
   app.getPath("userData"),
@@ -54,10 +55,14 @@ async function writeToSnippetsFile(contents: SnippetCollection): Promise<void> {
 }
 
 async function handleCreateSnippet(
-  _event: IpcMainInvokeEvent,
+  event: IpcMainInvokeEvent,
   snippetContent: SnippetContent,
 ): Promise<CreateSnippetResponse> {
   try {
+    if (!validateSender(event.senderFrame)) {
+      throw new Error("Invalid sender");
+    }
+
     const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
     const parsedSnippetContent = snippetContentSchema.parse(snippetContent);
 
@@ -81,10 +86,14 @@ async function handleCreateSnippet(
 }
 
 async function handleGetSnippetById(
-  _event: IpcMainInvokeEvent,
+  event: IpcMainInvokeEvent,
   snippetId: Snippet["id"],
 ): Promise<GetSnippetResponse> {
   try {
+    if (!validateSender(event.senderFrame)) {
+      throw new Error("Invalid sender");
+    }
+
     const snippetCollection = await readSnippetsFile();
 
     const targetSnippet = snippetCollection.snippets?.find(
@@ -101,9 +110,13 @@ async function handleGetSnippetById(
 }
 
 async function handleGetAllSnippets(
-  _event: IpcMainInvokeEvent,
+  event: IpcMainInvokeEvent,
 ): Promise<GetAllSnippetsResponse> {
   try {
+    if (!validateSender(event.senderFrame)) {
+      throw new Error("Invalid sender");
+    }
+
     const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
 
     return {
@@ -116,11 +129,15 @@ async function handleGetAllSnippets(
 }
 
 async function handleUpdateSnippetById(
-  _event: IpcMainInvokeEvent,
+  event: IpcMainInvokeEvent,
   snippetBody: SnippetUpdateBody,
   snippetId: Snippet["id"],
 ): Promise<UpdateSnippetResponse> {
   try {
+    if (!validateSender(event.senderFrame)) {
+      throw new Error("Invalid sender");
+    }
+
     const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
     const parsedSnippetContent = snippetUpdateBodySchema.parse(snippetBody);
 
@@ -152,10 +169,14 @@ async function handleUpdateSnippetById(
 }
 
 async function handleDeleteSnippetById(
-  _event: IpcMainInvokeEvent,
+  event: IpcMainInvokeEvent,
   snippetId: Snippet["id"],
 ): Promise<DeleteSnippetResponse> {
   try {
+    if (!validateSender(event.senderFrame)) {
+      throw new Error("Invalid sender");
+    }
+
     const { snippets: fetchedSnippets = [] } = await readSnippetsFile();
 
     if (fetchedSnippets.length === 0) {
