@@ -3,32 +3,18 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
-import type { Snippet } from "../shared/schemas/snippet";
-
-const exampleSnippets: Snippet[] = [
-  {
-    id: "1",
-    dateCreated: new Date("2026-09-02").toISOString(),
-    dateLastUpdated: new Date("2026-09-02").toISOString(),
-    dateLastUsed: new Date("2026-09-02").toISOString(),
-    name: "Test 1",
-    pinned: true,
-    value: "example",
-  },
-  {
-    id: "2",
-    dateCreated: new Date("2026-09-02").toISOString(),
-    dateLastUpdated: new Date("2026-09-02").toISOString(),
-    dateLastUsed: new Date("2026-09-02").toISOString(),
-    name: "Test 2",
-    pinned: false,
-    value: "example",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
   const { ref, dimensions } = useDimensions();
+
+  const { data: getAllSnippetsResponse } = useQuery({
+    queryKey: ["snippets"],
+    queryFn: window.api.getAllSnippets,
+  });
+
+  const fetchedSnippets = getAllSnippetsResponse?.snippets ?? [];
 
   useEffect(() => {
     if (!dimensions.height) return;
@@ -56,7 +42,7 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          <SnippetList snippets={exampleSnippets} />
+          <SnippetList snippets={fetchedSnippets} />
         </div>
       )}
       <SearchBar />
