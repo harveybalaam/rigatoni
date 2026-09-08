@@ -1,14 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import SnippetListSection from "./SnippetListSection";
-import type { Snippet } from "../../../shared/schemas/snippet";
 import getRecentSnippets from "../../utils/get-recent-snippets";
 
-interface SnippetListProps {
-  snippets: Snippet[];
-}
+export default function SnippetList() {
+  const { data: getAllSnippetsResponse } = useQuery({
+    queryKey: ["snippets"],
+    queryFn: window.api.getAllSnippets,
+  });
+  const fetchedSnippets = getAllSnippetsResponse?.snippets ?? [];
 
-export default function SnippetList({ snippets }: SnippetListProps) {
-  const pinnedSnippets = snippets.filter((snippet) => snippet.pinned);
-  const recentSnippets = getRecentSnippets(snippets);
+  const pinnedSnippets = fetchedSnippets.filter((snippet) => snippet.pinned);
+  const recentSnippets = getRecentSnippets(fetchedSnippets);
 
   return (
     <div className="flex flex-col gap-2 px-2 pb-4">

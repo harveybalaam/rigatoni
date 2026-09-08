@@ -3,18 +3,10 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
-import { useQuery } from "@tanstack/react-query";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
   const { ref, dimensions } = useDimensions();
-
-  const { data: getAllSnippetsResponse } = useQuery({
-    queryKey: ["snippets"],
-    queryFn: window.api.getAllSnippets,
-  });
-
-  const fetchedSnippets = getAllSnippetsResponse?.snippets ?? [];
 
   useEffect(() => {
     if (!dimensions.height) return;
@@ -42,7 +34,7 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          <SnippetList snippets={fetchedSnippets} />
+          <SnippetList />
         </div>
       )}
       <SearchBar />
