@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import SnippetListSection from "./SnippetListSection";
 import getRecentSnippets from "../../utils/get-recent-snippets";
+import { getAllSnippetsResponseSchema } from "../../../shared/schemas/snippet";
 
 export default function SnippetList() {
   const {
@@ -12,9 +13,14 @@ export default function SnippetList() {
     queryKey: ["snippets"],
     queryFn: async () => {
       const response = await window.api.getAllSnippets();
-      if (response.success) return response;
+      if (!response.success) throw new Error("Failed to fetch snippets");
 
-      throw new Error("Failed to fetch snippets");
+      const parsedResponse = getAllSnippetsResponseSchema.safeParse(response);
+      if (parsedResponse.error) {
+        throw new Error("Invalid snippet data");
+      }
+
+      return parsedResponse.data;
     },
   });
   const fetchedSnippets = getAllSnippetsResponse?.snippets ?? [];
