@@ -4,9 +4,11 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
 import { useGetSnippetsQuery } from "./api/snippet/queries";
+import CreateSnippetForm from "./components/CreateSnippetForm";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
+  const [isCreateSnippetFormOpen, setIsCreateSnippetFormOpen] = useState(false);
   const { ref, dimensions } = useDimensions();
 
   const { data: allSnippets = [], error, isPending } = useGetSnippetsQuery();
@@ -37,14 +39,25 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          <SnippetList
-            error={error}
-            isPending={isPending}
-            snippets={allSnippets}
-          />
+          {isCreateSnippetFormOpen ? (
+            <CreateSnippetForm
+              setIsCreateSnippetFormOpen={setIsCreateSnippetFormOpen}
+            />
+          ) : (
+            <SnippetList
+              error={error}
+              isPending={isPending}
+              snippets={allSnippets}
+            />
+          )}
         </div>
       )}
-      <SearchBar />
+      <SearchBar
+        isCreateSnippetFormOpen={isCreateSnippetFormOpen}
+        isWindowExpanded={isWindowExpanded}
+        setIsCreateSnippetFormOpen={setIsCreateSnippetFormOpen}
+        setIsWindowExpanded={setIsWindowExpanded}
+      />
     </div>
   );
 }
