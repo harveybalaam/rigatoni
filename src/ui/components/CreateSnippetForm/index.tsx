@@ -84,24 +84,26 @@ export default function CreateSnippetForm({
                 type="text"
               />
             </div>
-            <label
-              htmlFor="pinned"
-              className="group text-overlay-0 text-sm flex flex-col flex-1 gap-0.5"
-            >
-              <p>PINNED</p>
-              <input
-                className="peer sr-only"
-                id="pinned"
-                name="pinned"
-                type="checkbox"
-              />
-              <span className="flex justify-center items-center text-crust border-2 border-base w-6 h-6 rounded-md cursor-pointer peer-checked: peer-focus-visible:outline-mauve peer-focus-visible:outline-2 peer-checked:bg-mauve peer-checked:outline-offset-2 peer-checked:border-mauve transition-colors duration-150">
-                <CheckIcon
-                  className="hidden group-has-checked:inline text-crust"
-                  size={16}
+            <div className="flex flex-1 h-min">
+              <label
+                htmlFor="pinned"
+                className="group flex flex-col gap-0.5 text-overlay-0 text-sm"
+              >
+                <p>PINNED</p>
+                <input
+                  className="peer sr-only"
+                  id="pinned"
+                  name="pinned"
+                  type="checkbox"
                 />
-              </span>
-            </label>
+                <span className="flex justify-center items-center text-crust border-2 border-base w-6 h-6 rounded-md cursor-pointer peer-checked: peer-focus-visible:outline-mauve peer-focus-visible:outline-2 peer-checked:bg-mauve peer-checked:outline-offset-2 peer-checked:border-mauve transition-colors duration-150">
+                  <CheckIcon
+                    className="hidden group-has-checked:inline text-crust"
+                    size={16}
+                  />
+                </span>
+              </label>
+            </div>
           </div>
           <div className="flex flex-col flex-2 gap-0.5">
             <label htmlFor="value" className="text-overlay-0 text-sm">
