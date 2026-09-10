@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
 import { snippetContentSchema } from "../../../shared/schemas/snippet";
+import TextInput from "../inputs/TextInput";
 
 interface CreateSnippetFormProps {
   setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -70,20 +71,7 @@ export default function CreateSnippetForm({
       <div>
         <div className="flex flex-col gap-1">
           <div className="flex gap-4">
-            <div className="flex flex-col flex-2 gap-0.5">
-              <label htmlFor="name" className="text-overlay-0 text-sm">
-                <span className="flex flex-row gap-0.5 items-center">
-                  NAME
-                  <sup className="text-red">*</sup>
-                </span>
-              </label>
-              <input
-                className="border-2 border-base text-primary text-sm rounded-lg p-1.5 focus-visible:outline-2 focus-visible:outline-mauve"
-                id="name"
-                name="name"
-                type="text"
-              />
-            </div>
+            <TextInput name="name" label="name" required />
             <div className="flex flex-1 h-min">
               <label
                 htmlFor="pinned"
@@ -105,20 +93,7 @@ export default function CreateSnippetForm({
               </label>
             </div>
           </div>
-          <div className="flex flex-col flex-2 gap-0.5">
-            <label htmlFor="value" className="text-overlay-0 text-sm">
-              <span className="flex flex-row gap-0.5 items-center">
-                VALUE
-                <sup className="text-red">*</sup>
-              </span>
-            </label>
-            <input
-              className="border-2 border-base text-primary text-sm rounded-lg p-1.5 focus-visible:outline-2 focus-visible:outline-mauve"
-              id="value"
-              name="value"
-              type="text"
-            />
-          </div>
+          <TextInput name="value" label="value" required />
         </div>
       </div>
     </form>
