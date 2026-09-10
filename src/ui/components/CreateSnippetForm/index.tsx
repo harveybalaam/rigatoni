@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
+import { SaveIcon, XIcon } from "lucide-react";
 import { snippetContentSchema } from "../../../shared/schemas/snippet";
 import TextInput from "../inputs/TextInput";
+import CheckboxInput from "../inputs/CheckboxInput";
 
 interface CreateSnippetFormProps {
   setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,24 +74,7 @@ export default function CreateSnippetForm({
           <div className="flex gap-4">
             <TextInput name="name" label="name" required />
             <div className="flex flex-1 h-min">
-              <label
-                htmlFor="pinned"
-                className="group flex flex-col gap-0.5 text-overlay-0 text-sm"
-              >
-                <p>PINNED</p>
-                <input
-                  className="peer sr-only"
-                  id="pinned"
-                  name="pinned"
-                  type="checkbox"
-                />
-                <span className="flex justify-center items-center text-crust border-2 border-base w-6 h-6 rounded-md cursor-pointer peer-checked: peer-focus-visible:outline-mauve peer-focus-visible:outline-2 peer-checked:bg-mauve peer-checked:outline-offset-2 peer-checked:border-mauve transition-colors duration-150">
-                  <CheckIcon
-                    className="hidden group-has-checked:inline text-crust"
-                    size={16}
-                  />
-                </span>
-              </label>
+              <CheckboxInput name="pinned" label="pinned" />
             </div>
           </div>
           <TextInput name="value" label="value" required />
