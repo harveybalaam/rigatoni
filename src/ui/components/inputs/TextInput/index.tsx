@@ -35,7 +35,7 @@ export default function TextInput({
         </label>
       )}
       <input
-        className="border-2 border-base text-primary text-sm rounded-lg p-1.5 focus-visible:outline-2 focus-visible:outline-mauve"
+        className="border-2 border-base text-primary text-sm rounded-lg p-1.5 focus-visible:outline-2 focus-visible:outline-mauve focus-visible:border-base invalid:border-red"
         id={name}
         name={name}
         type={type}
