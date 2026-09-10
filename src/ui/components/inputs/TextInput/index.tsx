@@ -39,6 +39,7 @@ export default function TextInput({
         id={name}
         name={name}
         type={type}
+        required={required}
       />
     </div>
   );
