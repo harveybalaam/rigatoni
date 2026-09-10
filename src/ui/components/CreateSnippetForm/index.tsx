@@ -3,6 +3,7 @@ import { SaveIcon, XIcon } from "lucide-react";
 import { snippetContentSchema } from "../../../shared/schemas/snippet";
 import TextInput from "../inputs/TextInput";
 import CheckboxInput from "../inputs/CheckboxInput";
+import IconButton from "../IconButton";
 
 interface CreateSnippetFormProps {
   setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,19 +55,8 @@ export default function CreateSnippetForm({
       <div className="flex justify-between items-center">
         <h2 className="text-subtext-0">NEW SNIPPET</h2>
         <span className="flex gap-1">
-          <button
-            className="rounded-md bg-red/25 text-red cursor-pointer text-center p-1 hover:bg-red hover:text-crust focus-visible:outline-2 focus-visible:outline-red transition duration-150"
-            type="button"
-            onClick={handleOnCancelClick}
-          >
-            <XIcon size={16} />
-          </button>
-          <button
-            className="rounded-md bg-sapphire/25 text-sapphire cursor-pointer text-center p-1 hover:bg-sapphire hover:text-crust focus-visible:outline-2 focus-visible:outline-sapphire transition duration-150"
-            type="submit"
-          >
-            <SaveIcon size={16} />
-          </button>
+          <IconButton colour="red" icon={XIcon} onClick={handleOnCancelClick} />
+          <IconButton colour="sapphire" icon={SaveIcon} type="submit" />
         </span>
       </div>
       <div>

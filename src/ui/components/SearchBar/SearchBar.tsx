@@ -1,4 +1,5 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
+import IconButton from "../IconButton";
 
 interface SearchBarProps {
   isCreateSnippetFormOpen: boolean;
@@ -29,13 +30,12 @@ export default function SearchBar({
           type="text"
           placeholder="Search something to paste..."
         />
-        <button
-          disabled={isCreateSnippetFormOpen}
-          className="rounded-md bg-green/25 text-green cursor-pointer text-center p-1 hover:bg-green hover:text-base focus-visible:outline-2 focus-visible:outline-green disabled:cursor-not-allowed disabled:bg-overlay-2/25 disabled:text-overlay-2 transition duration-150"
+        <IconButton
+          colour="green"
+          icon={PlusIcon}
           onClick={handleOnAddButtonClick}
-        >
-          <PlusIcon size={16} />
-        </button>
+          disabled={isCreateSnippetFormOpen}
+        />
       </span>
     </div>
   );
