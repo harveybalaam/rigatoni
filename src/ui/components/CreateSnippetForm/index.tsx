@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SaveIcon, XIcon } from "lucide-react";
-import { snippetContentSchema } from "../../../shared/schemas/snippet";
+import {
+  createSnippetResponseSchema,
+  snippetContentSchema,
+} from "../../../shared/schemas/snippet";
 import TextInput from "../inputs/TextInput";
 import CheckboxInput from "../inputs/CheckboxInput";
 import IconButton from "../IconButton";
@@ -14,8 +17,8 @@ export default function CreateSnippetForm({
 }: CreateSnippetFormProps) {
   const queryClient = useQueryClient();
 
-  const createSnippetMutation = useMutation({
-    mutationFn: (event: React.SubmitEvent<HTMLFormElement>) => {
+  const { isError, mutate: createSnippetMutation } = useMutation({
+    mutationFn: async (event: React.SubmitEvent<HTMLFormElement>) => {
       event.preventDefault();
 
       const rawFormData = Object.fromEntries(new FormData(event.target));
@@ -33,7 +36,15 @@ export default function CreateSnippetForm({
         throw new Error("Invalid form data");
       }
 
-      return window.api.createSnippet(parsedFormData.data);
+      const response = await window.api.createSnippet(parsedFormData.data);
+      const parsedResponse = createSnippetResponseSchema.safeParse(response);
+      if (parsedResponse.error) {
+        throw new Error("Invalid response format");
+      }
+
+      if (!parsedResponse.success) throw new Error("Failed create snippet");
+
+      return parsedResponse.data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["snippets"] });
@@ -50,7 +61,7 @@ export default function CreateSnippetForm({
       action=""
       className="flex flex-col gap-2 px-4 pb-4"
       name="create-snippet"
-      onSubmit={createSnippetMutation.mutate}
+      onSubmit={createSnippetMutation}
     >
       <div className="flex justify-between items-center">
         <h2 className="text-subtext-0">NEW SNIPPET</h2>
@@ -59,6 +70,11 @@ export default function CreateSnippetForm({
           <IconButton colour="sapphire" icon={SaveIcon} type="submit" />
         </span>
       </div>
+      {isError && (
+        <p className="italic text-red text-xs leading-tight">
+          An error occurred when creating the snippet
+        </p>
+      )}
       <div>
         <div className="flex flex-col gap-1">
           <div className="flex gap-4">
