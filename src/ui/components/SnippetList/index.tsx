@@ -13,12 +13,12 @@ export default function SnippetList() {
     queryKey: ["snippets"],
     queryFn: async () => {
       const response = await window.api.getAllSnippets();
-      if (!response.success) throw new Error("Failed to fetch snippets");
-
       const parsedResponse = getAllSnippetsResponseSchema.safeParse(response);
       if (parsedResponse.error) {
         throw new Error("Invalid snippet data");
       }
+
+      if (!parsedResponse.success) throw new Error("Failed to fetch snippets");
 
       return parsedResponse.data;
     },
