@@ -1,8 +1,21 @@
+type TextInputType = Extract<
+  React.HTMLInputTypeAttribute,
+  | "email"
+  | "month"
+  | "number"
+  | "password"
+  | "search"
+  | "tel"
+  | "text"
+  | "url"
+  | "week"
+>;
+
 interface TextInputProps {
   label?: string;
   name: string;
   required?: boolean;
-  type?: string;
+  type?: TextInputType;
 }
 
 export default function TextInput({
