@@ -1,12 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SaveIcon, XIcon } from "lucide-react";
-import {
-  createSnippetResponseSchema,
-  snippetContentSchema,
-} from "../../../shared/schemas/snippet";
 import TextInput from "../inputs/TextInput";
 import CheckboxInput from "../inputs/CheckboxInput";
 import IconButton from "../IconButton";
+import { useCreateSnippetMutation } from "../../api/snippet/mutations";
 
 interface CreateSnippetFormProps {
   setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,45 +11,16 @@ interface CreateSnippetFormProps {
 export default function CreateSnippetForm({
   setIsCreateSnippetFormOpen,
 }: CreateSnippetFormProps) {
-  const queryClient = useQueryClient();
-
-  const { isError, mutate: createSnippetMutation } = useMutation({
-    mutationFn: async (event: React.SubmitEvent<HTMLFormElement>) => {
-      event.preventDefault();
-
-      const rawFormData = Object.fromEntries(new FormData(event.target));
-
-      // coerce presence/absence of FormData's 'on' to boolean
-      const transformedFormData = {
-        ...rawFormData,
-        pinned: rawFormData.pinned === "on",
-      };
-
-      const parsedFormData =
-        snippetContentSchema.safeParse(transformedFormData);
-
-      if (parsedFormData.error || !parsedFormData.data) {
-        throw new Error("Invalid form data");
-      }
-
-      const response = await window.api.createSnippet(parsedFormData.data);
-      const parsedResponse = createSnippetResponseSchema.safeParse(response);
-      if (parsedResponse.error) {
-        throw new Error("Invalid response format");
-      }
-
-      if (!parsedResponse.success) throw new Error("Failed create snippet");
-
-      return parsedResponse.data;
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["snippets"] });
-      setIsCreateSnippetFormOpen(false);
-    },
-  });
+  const { isError, mutate: createSnippetMutation } = useCreateSnippetMutation();
 
   const handleOnCancelClick = () => {
     setIsCreateSnippetFormOpen(false);
+  };
+
+  const handleOnSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    createSnippetMutation(event, {
+      onSuccess: () => setIsCreateSnippetFormOpen(false),
+    });
   };
 
   return (
@@ -61,7 +28,7 @@ export default function CreateSnippetForm({
       action=""
       className="flex flex-col gap-2 px-4 pb-4"
       name="create-snippet"
-      onSubmit={createSnippetMutation}
+      onSubmit={handleOnSubmit}
     >
       <div className="flex justify-between items-center">
         <h2 className="text-subtext-0">NEW SNIPPET</h2>
