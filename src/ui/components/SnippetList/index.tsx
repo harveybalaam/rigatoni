@@ -1,32 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import SnippetListSection from "./SnippetListSection";
 import getRecentSnippets from "../../utils/get-recent-snippets";
-import { getAllSnippetsResponseSchema } from "../../../shared/schemas/snippet";
+import { useGetSnippetsQuery } from "../../api/snippet/queries";
 
 export default function SnippetList() {
   const {
-    data: getAllSnippetsResponse,
+    data: allSnippets = [],
     error,
     isError,
     isPending,
-  } = useQuery({
-    queryKey: ["snippets"],
-    queryFn: async () => {
-      const response = await window.api.getAllSnippets();
-      const parsedResponse = getAllSnippetsResponseSchema.safeParse(response);
-      if (parsedResponse.error) {
-        throw new Error("Invalid snippet data");
-      }
+  } = useGetSnippetsQuery();
 
-      if (!parsedResponse.success) throw new Error("Failed to fetch snippets");
-
-      return parsedResponse.data;
-    },
-  });
-  const fetchedSnippets = getAllSnippetsResponse?.snippets ?? [];
-
-  const pinnedSnippets = fetchedSnippets.filter((snippet) => snippet.pinned);
-  const recentSnippets = getRecentSnippets(fetchedSnippets);
+  const pinnedSnippets = allSnippets.filter((snippet) => snippet.pinned);
+  const recentSnippets = getRecentSnippets(allSnippets);
 
   if (isPending) {
     return (
