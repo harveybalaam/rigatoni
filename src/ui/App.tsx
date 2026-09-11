@@ -3,10 +3,13 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
+import { useGetSnippetsQuery } from "./api/snippet/queries";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
   const { ref, dimensions } = useDimensions();
+
+  const { data: allSnippets = [], error, isPending } = useGetSnippetsQuery();
 
   useEffect(() => {
     if (!dimensions.height) return;
@@ -34,7 +37,11 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          <SnippetList />
+          <SnippetList
+            error={error}
+            isPending={isPending}
+            snippets={allSnippets}
+          />
         </div>
       )}
       <SearchBar />
