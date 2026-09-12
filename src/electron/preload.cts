@@ -32,8 +32,9 @@ contextBridge.exposeInMainWorld("api", {
   },
   updateSnippetById: async (
     snippetBody: SnippetUpdateBody,
+    snippetId: Snippet["id"],
   ): Promise<UpdateSnippetResponse> => {
-    return ipcRenderer.invoke("update-snippet-by-id", snippetBody);
+    return ipcRenderer.invoke("update-snippet-by-id", snippetBody, snippetId);
   },
   deleteSnippetById: async (
     snippetId: Snippet["id"],
