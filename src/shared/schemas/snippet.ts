@@ -18,10 +18,10 @@ export const snippetContentSchema = snippetSchema.pick({
   value: true,
 });
 
-export const snippetUpdateBodySchema = snippetSchema.omit({
-  id: true,
-  dateCreated: true,
-  dateLastUpdated: true,
+export const snippetUpdateBodySchema = z.strictObject({
+  ...snippetContentSchema.shape,
+  dateLastUpdated: z.iso.datetime(),
+  dateLastUsed: z.iso.datetime().optional(),
 });
 
 export const snippetCollectionSchema = z.strictObject({
