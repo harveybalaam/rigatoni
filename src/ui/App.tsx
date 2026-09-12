@@ -3,32 +3,21 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
-import type { ISnippet } from "../shared/types/snippet";
+import { useGetSnippetsQuery } from "./api/snippet/queries";
+import CreateSnippetForm from "./components/CreateSnippetForm";
+import UpdateSnippetForm from "./components/UpdateSnippetForm";
+import type { Snippet } from "../shared/schemas/snippet";
 
-const exampleSnippets: ISnippet[] = [
-  {
-    id: "1",
-    dateCreated: new Date("2026-09-02").toJSON(),
-    dateLastUpdated: new Date("2026-09-02").toJSON(),
-    dateLastUsed: new Date("2026-09-02").toJSON(),
-    name: "Test 1",
-    pinned: true,
-    value: "example",
-  },
-  {
-    id: "2",
-    dateCreated: new Date("2026-09-02").toJSON(),
-    dateLastUpdated: new Date("2026-09-02").toJSON(),
-    dateLastUsed: new Date("2026-09-02").toJSON(),
-    name: "Test 2",
-    pinned: false,
-    value: "example",
-  },
-];
+export type AppView = "create" | "edit" | "list";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
+  const [snippetIdToEdit, setSnippetIdToEdit] = useState<Snippet["id"]>("");
+  const [currentView, setCurrentView] = useState<AppView>("list");
+
   const { ref, dimensions } = useDimensions();
+
+  const { data: allSnippets = [], error, isPending } = useGetSnippetsQuery();
 
   useEffect(() => {
     if (!dimensions.height) return;
@@ -39,6 +28,23 @@ export default function App() {
       window.appWindow.setHeightOffset(0);
     }
   }, [dimensions, isWindowExpanded]);
+
+  const onEditSnippet = (snippetId: Snippet["id"]) => {
+    setSnippetIdToEdit(snippetId);
+    setCurrentView("edit");
+  };
+
+  const snippetForm =
+    currentView === "edit" ? (
+      <UpdateSnippetForm
+        initialSnippetData={allSnippets.find(
+          ({ id }) => id === snippetIdToEdit,
+        )}
+        setCurrentView={setCurrentView}
+      />
+    ) : (
+      <CreateSnippetForm setCurrentView={setCurrentView} />
+    );
 
   return (
     <div className="bg-crust h-screen w-screen flex flex-col">
@@ -56,10 +62,24 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          <SnippetList snippets={exampleSnippets} />
+          {currentView === "list" ? (
+            <SnippetList
+              error={error}
+              isPending={isPending}
+              onEditSnippet={onEditSnippet}
+              snippets={allSnippets}
+            />
+          ) : (
+            snippetForm
+          )}
         </div>
       )}
-      <SearchBar />
+      <SearchBar
+        currentView={currentView}
+        isWindowExpanded={isWindowExpanded}
+        setCurrentView={setCurrentView}
+        setIsWindowExpanded={setIsWindowExpanded}
+      />
     </div>
   );
 }

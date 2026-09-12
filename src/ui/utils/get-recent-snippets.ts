@@ -1,6 +1,6 @@
-import type { ISnippet } from "../../shared/types/snippet";
+import type { Snippet } from "../../shared/schemas/snippet";
 
-export default function getRecentSnippets(snippets: ISnippet[]) {
+export default function getRecentSnippets(snippets: Snippet[]) {
   const recencyThresholdDays = 3;
 
   const now = new Date();
