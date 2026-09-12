@@ -35,7 +35,7 @@ async function createSnippet(event: React.SubmitEvent<HTMLFormElement>) {
     throw new Error("Invalid response format");
   }
 
-  if (!parsedResponse.success) throw new Error("Failed to create snippet");
+  if (!parsedResponse.data.success) throw new Error("Failed to create snippet");
 
   return parsedResponse.data.snippet;
 }
