@@ -6,13 +6,25 @@ type SnippetProps = Pick<Snippet, "id" | "name" | "value"> & {
   onEditClick: (snippetId: Snippet["id"]) => void;
 };
 
-export default function Snippet({ id, onEditClick, name }: SnippetProps) {
+export default function Snippet({
+  id,
+  name,
+  onEditClick,
+  value,
+}: SnippetProps) {
   const { isError: isDeleteError, mutate: deleteSnippetMutation } =
     useDeleteSnippetMutation();
 
+  const onCopyClick = async () => {
+    await navigator.clipboard.writeText(value);
+  };
+
   return (
     <div className=" bg-crust text-primary hover:text-mauve hover:bg-base flex gap-1 justify-between items-center p-2 m-0 rounded-lg has-focus-visible:bg-base has-focus-visible:[&>.action]:inline hover:[&>.action]:inline">
-      <button className="rounded-md grow overflow-x-scroll text-start focus-visible:outline-2 focus-visible:outline-mauve focus-visible:text-mauve hover:cursor-pointer">
+      <button
+        className="rounded-md grow overflow-x-scroll text-start focus-visible:outline-2 focus-visible:outline-mauve focus-visible:text-mauve hover:cursor-pointer"
+        onClick={onCopyClick}
+      >
         {name}
         {isDeleteError && (
           <p className="italic text-red text-xs leading-tight">
