@@ -81,9 +81,9 @@ export function useUpdateSnippetMutation() {
   return useMutation({
     mutationFn: ({ event, snippetId }: UpdateSnippetMutationParams) =>
       updateSnippet(event, snippetId),
-    onSuccess: (_data, variables) =>
+    onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["snippets", variables.snippetId],
+        queryKey: ["snippets"],
       }),
   });
 }
