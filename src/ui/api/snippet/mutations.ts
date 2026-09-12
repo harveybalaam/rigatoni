@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  baseSnippetResponseSchema as deleteSnippetResponseSchema,
   createSnippetResponseSchema,
   snippetContentSchema,
   snippetUpdateBodySchema,
@@ -75,6 +76,16 @@ async function updateSnippet(
   return parsedResponse.data.snippet;
 }
 
+async function deleteSnippet(snippetId: Snippet["id"]) {
+  const response = await window.api.deleteSnippetById(snippetId);
+  const parsedResponse = deleteSnippetResponseSchema.safeParse(response);
+  if (parsedResponse.error) {
+    throw new Error("Invalid response format");
+  }
+
+  if (!parsedResponse.data.success) throw new Error("Failed to delete snippet");
+}
+
 export function useUpdateSnippetMutation() {
   const queryClient = useQueryClient();
 
@@ -94,6 +105,15 @@ export function useCreateSnippetMutation() {
   return useMutation({
     mutationFn: (event: React.SubmitEvent<HTMLFormElement>) =>
       createSnippet(event),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["snippets"] }),
+  });
+}
+
+export function useDeleteSnippetMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (snippetId: Snippet["id"]) => deleteSnippet(snippetId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["snippets"] }),
   });
 }
