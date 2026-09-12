@@ -18,13 +18,13 @@ declare global {
       createSnippet: (
         snippetBody: SnippetContent,
       ) => Promise<CreateSnippetResponse>;
-      getSnippet: (snippetId: Snippet["id"]) => Promise<GetSnippetResponse>;
+      getSnippetById: (snippetId: Snippet["id"]) => Promise<GetSnippetResponse>;
       getAllSnippets: () => Promise<GetAllSnippetsResponse>;
-      updateSnippet: (
+      updateSnippetById: (
         snippetBody: SnippetUpdateBody,
         snippetId: Snippet["id"],
       ) => Promise<UpdateSnippetResponse>;
-      deleteSnippet: (
+      deleteSnippetById: (
         snippetId: Snippet["id"],
       ) => Promise<DeleteSnippetResponse>;
     };

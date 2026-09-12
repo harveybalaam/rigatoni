@@ -18,7 +18,7 @@ async function getSnippets() {
 }
 
 async function getSnippetById(snippetId: Snippet["id"]) {
-  const response = await window.api.getSnippet(snippetId);
+  const response = await window.api.getSnippetById(snippetId);
 
   const parsedResponse = getSnippetResponseSchema.safeParse(response);
   if (parsedResponse.error) {

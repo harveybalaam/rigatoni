@@ -60,7 +60,7 @@ async function updateSnippet(
     throw new Error("Invalid form data");
   }
 
-  const response = await window.api.updateSnippet(
+  const response = await window.api.updateSnippetById(
     parsedFormData.data,
     snippetId,
   );
