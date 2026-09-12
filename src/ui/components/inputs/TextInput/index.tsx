@@ -12,6 +12,7 @@ type TextInputType = Extract<
 >;
 
 interface TextInputProps {
+  defaultValue?: string;
   label?: string;
   name: string;
   required?: boolean;
@@ -19,6 +20,7 @@ interface TextInputProps {
 }
 
 export default function TextInput({
+  defaultValue,
   label,
   name,
   required = false,
@@ -36,6 +38,7 @@ export default function TextInput({
       )}
       <input
         className="border-2 border-base text-primary text-sm rounded-lg p-1.5 focus-visible:outline-2 focus-visible:outline-mauve focus-visible:border-base invalid:border-red"
+        defaultValue={defaultValue}
         id={name}
         name={name}
         type={type}
