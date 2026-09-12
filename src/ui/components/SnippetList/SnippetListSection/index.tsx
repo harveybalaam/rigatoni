@@ -1,31 +1,16 @@
-import type { Snippet as SnippetSchema } from "../../../../shared/schemas/snippet";
-import Snippet from "../../Snippet";
-
 interface SnippetListSectionProps extends React.PropsWithChildren {
-  snippets: SnippetSchema[];
   title: string;
 }
 
 export default function SnippetListSection({
-  snippets,
+  children,
   title,
 }: SnippetListSectionProps) {
-  const numSnippets = snippets.length;
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-0.5">
       <h2 className="text-overlay-0 ml-2">{title.toUpperCase()}</h2>
-      {numSnippets > 0 ? (
-        <div>
-          {snippets.map((snippet) => (
-            <Snippet
-              key={snippet.id}
-              id={snippet.id}
-              name={snippet.name}
-              value={snippet.value}
-            />
-          ))}
-        </div>
+      {children ? (
+        children
       ) : (
         <div className="text-surface-2 ml-2">
           <p>No {title.toLowerCase()} snippets</p>

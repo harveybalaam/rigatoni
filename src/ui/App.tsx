@@ -5,10 +5,16 @@ import SnippetList from "./components/SnippetList";
 import { useDimensions } from "./hooks/use-dimensions";
 import { useGetSnippetsQuery } from "./api/snippet/queries";
 import CreateSnippetForm from "./components/CreateSnippetForm";
+import UpdateSnippetForm from "./components/UpdateSnippetForm";
+import type { Snippet } from "../shared/schemas/snippet";
+
+export type AppView = "create" | "edit" | "list";
 
 export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
-  const [isCreateSnippetFormOpen, setIsCreateSnippetFormOpen] = useState(false);
+  const [snippetIdToEdit, setSnippetIdToEdit] = useState<Snippet["id"]>("");
+  const [currentView, setCurrentView] = useState<AppView>("list");
+
   const { ref, dimensions } = useDimensions();
 
   const { data: allSnippets = [], error, isPending } = useGetSnippetsQuery();
@@ -22,6 +28,23 @@ export default function App() {
       window.appWindow.setHeightOffset(0);
     }
   }, [dimensions, isWindowExpanded]);
+
+  const onEditSnippet = (snippetId: Snippet["id"]) => {
+    setSnippetIdToEdit(snippetId);
+    setCurrentView("edit");
+  };
+
+  const snippetForm =
+    currentView === "edit" ? (
+      <UpdateSnippetForm
+        initialSnippetData={allSnippets.find(
+          ({ id }) => id === snippetIdToEdit,
+        )}
+        setCurrentView={setCurrentView}
+      />
+    ) : (
+      <CreateSnippetForm setCurrentView={setCurrentView} />
+    );
 
   return (
     <div className="bg-crust h-screen w-screen flex flex-col">
@@ -39,23 +62,22 @@ export default function App() {
       </div>
       {isWindowExpanded && (
         <div ref={ref}>
-          {isCreateSnippetFormOpen ? (
-            <CreateSnippetForm
-              setIsCreateSnippetFormOpen={setIsCreateSnippetFormOpen}
-            />
-          ) : (
+          {currentView === "list" ? (
             <SnippetList
               error={error}
               isPending={isPending}
+              onEditSnippet={onEditSnippet}
               snippets={allSnippets}
             />
+          ) : (
+            snippetForm
           )}
         </div>
       )}
       <SearchBar
-        isCreateSnippetFormOpen={isCreateSnippetFormOpen}
+        currentView={currentView}
         isWindowExpanded={isWindowExpanded}
-        setIsCreateSnippetFormOpen={setIsCreateSnippetFormOpen}
+        setCurrentView={setCurrentView}
         setIsWindowExpanded={setIsWindowExpanded}
       />
     </div>

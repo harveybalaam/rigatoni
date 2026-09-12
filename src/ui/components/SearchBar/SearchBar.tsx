@@ -1,24 +1,25 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
 import IconButton from "../IconButton";
+import type { AppView } from "../../App";
 
 interface SearchBarProps {
-  isCreateSnippetFormOpen: boolean;
+  currentView: AppView;
   isWindowExpanded: boolean;
-  setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentView: React.Dispatch<React.SetStateAction<AppView>>;
   setIsWindowExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SearchBar({
-  isCreateSnippetFormOpen,
+  currentView,
   isWindowExpanded,
-  setIsCreateSnippetFormOpen,
+  setCurrentView,
   setIsWindowExpanded,
 }: SearchBarProps) {
   const handleOnAddButtonClick = () => {
     if (!isWindowExpanded) {
       setIsWindowExpanded(true);
     }
-    setIsCreateSnippetFormOpen(true);
+    setCurrentView("create");
   };
 
   return (
@@ -34,7 +35,7 @@ export default function SearchBar({
           colour="green"
           icon={PlusIcon}
           onClick={handleOnAddButtonClick}
-          disabled={isCreateSnippetFormOpen}
+          disabled={currentView !== "list"}
         />
       </span>
     </div>

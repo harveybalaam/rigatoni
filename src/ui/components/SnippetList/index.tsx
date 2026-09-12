@@ -1,16 +1,19 @@
 import SnippetListSection from "./SnippetListSection";
 import getRecentSnippets from "../../utils/get-recent-snippets";
-import type { Snippet } from "../../../shared/schemas/snippet";
+import type { Snippet as SnippetType } from "../../../shared/schemas/snippet";
+import Snippet from "../Snippet";
 
 interface SnippetListProps {
   error: Error | null;
   isPending: boolean;
-  snippets: Snippet[];
+  onEditSnippet: (snippetId: SnippetType["id"]) => void;
+  snippets: SnippetType[];
 }
 
 export default function SnippetList({
   error,
   isPending,
+  onEditSnippet,
   snippets,
 }: SnippetListProps) {
   const pinnedSnippets = snippets.filter((snippet) => snippet.pinned);
@@ -32,9 +35,30 @@ export default function SnippetList({
 
   return (
     <div className="flex flex-col gap-2 px-2 pb-4">
-      <SnippetListSection snippets={recentSnippets} title="RECENT" />
+      <SnippetListSection title="RECENT">
+        {recentSnippets.length > 0 &&
+          recentSnippets.map((snippet) => (
+            <Snippet
+              key={snippet.id}
+              id={snippet.id}
+              name={snippet.name}
+              onEditClick={onEditSnippet}
+              value={snippet.value}
+            />
+          ))}
+      </SnippetListSection>
       {pinnedSnippets.length > 0 && (
-        <SnippetListSection snippets={pinnedSnippets} title="PINNED" />
+        <SnippetListSection title="PINNED">
+          {pinnedSnippets.map((snippet) => (
+            <Snippet
+              key={snippet.id}
+              id={snippet.id}
+              name={snippet.name}
+              onEditClick={onEditSnippet}
+              value={snippet.value}
+            />
+          ))}
+        </SnippetListSection>
       )}
     </div>
   );

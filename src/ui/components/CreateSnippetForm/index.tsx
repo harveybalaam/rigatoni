@@ -3,23 +3,24 @@ import TextInput from "../inputs/TextInput";
 import CheckboxInput from "../inputs/CheckboxInput";
 import IconButton from "../IconButton";
 import { useCreateSnippetMutation } from "../../api/snippet/mutations";
+import type { AppView } from "../../App";
 
 interface CreateSnippetFormProps {
-  setIsCreateSnippetFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentView: React.Dispatch<React.SetStateAction<AppView>>;
 }
 
 export default function CreateSnippetForm({
-  setIsCreateSnippetFormOpen,
+  setCurrentView,
 }: CreateSnippetFormProps) {
   const { isError, mutate: createSnippetMutation } = useCreateSnippetMutation();
 
   const handleOnCancelClick = () => {
-    setIsCreateSnippetFormOpen(false);
+    setCurrentView("list");
   };
 
   const handleOnSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     createSnippetMutation(event, {
-      onSuccess: () => setIsCreateSnippetFormOpen(false),
+      onSuccess: () => setCurrentView("list"),
     });
   };
 
