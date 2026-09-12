@@ -35,7 +35,7 @@ async function createSnippet(event: React.SubmitEvent<HTMLFormElement>) {
     throw new Error("Invalid response format");
   }
 
-  if (!parsedResponse.success) throw new Error("Failed create snippet");
+  if (!parsedResponse.success) throw new Error("Failed to create snippet");
 
   return parsedResponse.data.snippet;
 }
@@ -52,6 +52,7 @@ async function updateSnippet(
   const transformedFormData = {
     ...rawFormData,
     pinned: rawFormData.pinned === "on",
+    dateLastUpdated: new Date().toISOString(),
   };
 
   const parsedFormData = snippetUpdateBodySchema.safeParse(transformedFormData);
@@ -69,7 +70,7 @@ async function updateSnippet(
     throw new Error("Invalid response format");
   }
 
-  if (!parsedResponse.success) throw new Error("Failed create snippet");
+  if (!parsedResponse.data.success) throw new Error("Failed to update snippet");
 
   return parsedResponse.data.snippet;
 }
