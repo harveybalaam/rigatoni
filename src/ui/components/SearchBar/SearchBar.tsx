@@ -16,7 +16,7 @@ export default function SearchBar({
   searchValue,
 }: SearchBarProps) {
   return (
-    <div className="flex h-14 fixed bottom-0 left-0 right-0 p-4 bg-base rounded-t-2xl">
+    <div className="flex h-14 p-4 bg-base rounded-b-2xl">
       <span className="flex grow gap-2 items-center text-overlay-1">
         <SearchIcon size={20} />
         <input
