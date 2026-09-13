@@ -20,6 +20,7 @@ export default function SearchBar({
       <span className="flex grow gap-2 items-center text-overlay-1">
         <SearchIcon size={20} />
         <input
+          autoFocus
           className="text-sm/tight placeholder-surface-2 placeholder:italic outline-none w-full"
           onChange={({ target }) => onSearchValueChange(target.value)}
           placeholder="Search snippets..."
