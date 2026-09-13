@@ -64,18 +64,12 @@ export default function App() {
 
   return (
     <div className="bg-crust h-screen w-screen flex flex-col">
-      <div className="flex items-center justify-center text-surface-2 my-0.5">
-        <button
-          className="cursor-pointer px-16 rounded-md text-center focus-visible:outline-2 focus-visible:outline-mauve"
-          onClick={() => setIsWindowExpanded(!isWindowExpanded)}
-        >
-          {isWindowExpanded ? (
-            <ChevronDownIcon size="20" />
-          ) : (
-            <ChevronUpIcon size="20" />
-          )}
-        </button>
-      </div>
+      <SearchBar
+        currentView={currentView}
+        onCreateClick={onCreateSnippet}
+        onSearchValueChange={onSearchValueChange}
+        searchValue={searchValue}
+      />
       {isWindowExpanded && (
         <div ref={ref}>
           {currentView === "list" ? (
@@ -91,12 +85,18 @@ export default function App() {
           )}
         </div>
       )}
-      <SearchBar
-        currentView={currentView}
-        onCreateClick={onCreateSnippet}
-        onSearchValueChange={onSearchValueChange}
-        searchValue={searchValue}
-      />
+      <div className="flex items-center justify-center text-surface-2 my-0.5">
+        <button
+          className="cursor-pointer px-16 rounded-md text-center focus-visible:outline-2 focus-visible:outline-mauve"
+          onClick={() => setIsWindowExpanded(!isWindowExpanded)}
+        >
+          {isWindowExpanded ? (
+            <ChevronUpIcon size="20" />
+          ) : (
+            <ChevronDownIcon size="20" />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function UpdateSnippetForm({
 
   if (!initialSnippetData) {
     return (
-      <div className="flex px-4 pb-2 gap-0.5 items-center justify-between">
+      <div className="flex px-4 pt-2 gap-0.5 items-center justify-between">
         <p className="text-overlay-0 text-sm wrap-normal">
           An error occurred while loading snippet data
         </p>
@@ -45,7 +45,7 @@ export default function UpdateSnippetForm({
   return (
     <form
       action=""
-      className="flex flex-col gap-2 px-4 pb-4"
+      className="flex flex-col gap-2 px-4 pt-4"
       name="create-snippet"
       onSubmit={(event) => handleOnSubmit(event, initialSnippetData.id)}
     >

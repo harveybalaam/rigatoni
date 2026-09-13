@@ -27,7 +27,7 @@ export default function CreateSnippetForm({
   return (
     <form
       action=""
-      className="flex flex-col gap-2 px-4 pb-4"
+      className="flex flex-col gap-2 px-4 pt-4"
       name="create-snippet"
       onSubmit={handleOnSubmit}
     >
