@@ -29,7 +29,7 @@ const createWindow = () => {
     width: DEFAULT_WINDOW_WIDTH,
     x: offsetX,
     y: offsetY,
-    backgroundColor: "#00000000", // transparent
+    backgroundColor: "#11111b", // bg-crust
     frame: false,
     hasShadow: false,
     transparent: true,
