@@ -40,7 +40,10 @@ export default function SnippetList({
   if (searchValue) {
     return (
       <div className="flex flex-col gap-2 px-2 pb-4">
-        <SnippetListSection title="SEARCH RESULTS">
+        <SnippetListSection
+          emptyMessageOverride="No snippets found"
+          title="SEARCH RESULTS"
+        >
           {searchedSnippets.length > 0 &&
             searchedSnippets.map((snippet) => (
               <Snippet
