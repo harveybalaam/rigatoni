@@ -25,7 +25,7 @@ export default function SnippetList({
 
   if (isPending) {
     return (
-      <div className="text-overlay-0 px-4 pb-2 text-sm">
+      <div className="text-overlay-0 px-4 pt-2 text-sm">
         Loading snippets...
       </div>
     );
@@ -33,13 +33,13 @@ export default function SnippetList({
 
   if (error) {
     return (
-      <div className="text-overlay-0 px-4 pb-2 text-sm">{`An error occurred while loading snippets: ${error.message}`}</div>
+      <div className="text-overlay-0 px-4 pt-2 text-sm">{`An error occurred while loading snippets: ${error.message}`}</div>
     );
   }
 
   if (searchValue) {
     return (
-      <div className="flex flex-col gap-2 px-2 pb-4">
+      <div className="flex flex-col gap-2 px-2 pt-4">
         <SnippetListSection
           emptyMessageOverride="No snippets found"
           title="SEARCH RESULTS"
@@ -60,19 +60,7 @@ export default function SnippetList({
   }
 
   return (
-    <div className="flex flex-col gap-2 px-2 pb-4">
-      <SnippetListSection title="RECENT">
-        {recentSnippets.length > 0 &&
-          recentSnippets.map((snippet) => (
-            <Snippet
-              key={snippet.id}
-              id={snippet.id}
-              name={snippet.name}
-              onEditClick={onEditSnippet}
-              value={snippet.value}
-            />
-          ))}
-      </SnippetListSection>
+    <div className="flex flex-col gap-2 px-2 pt-4">
       {pinnedSnippets.length > 0 && (
         <SnippetListSection title="PINNED">
           {pinnedSnippets.map((snippet) => (
@@ -86,6 +74,18 @@ export default function SnippetList({
           ))}
         </SnippetListSection>
       )}
+      <SnippetListSection title="RECENT">
+        {recentSnippets.length > 0 &&
+          recentSnippets.map((snippet) => (
+            <Snippet
+              key={snippet.id}
+              id={snippet.id}
+              name={snippet.name}
+              onEditClick={onEditSnippet}
+              value={snippet.value}
+            />
+          ))}
+      </SnippetListSection>
     </div>
   );
 }
