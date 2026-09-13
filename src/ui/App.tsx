@@ -42,6 +42,14 @@ export default function App() {
     setCurrentView("create");
   };
 
+  const onSearchValueChange = (value: string) => {
+    setSearchValue(value);
+
+    if (!isWindowExpanded && value !== "") {
+      setIsWindowExpanded(true);
+    }
+  };
+
   const snippetForm =
     currentView === "edit" ? (
       <UpdateSnippetForm
@@ -86,8 +94,8 @@ export default function App() {
       <SearchBar
         currentView={currentView}
         onCreateClick={onCreateSnippet}
+        onSearchValueChange={onSearchValueChange}
         searchValue={searchValue}
-        setSearchValue={setSearchValue}
       />
     </div>
   );

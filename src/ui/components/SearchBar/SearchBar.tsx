@@ -5,15 +5,15 @@ import type { AppView } from "../../App";
 interface SearchBarProps {
   currentView: AppView;
   onCreateClick: () => void;
+  onSearchValueChange: (value: string) => void;
   searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function SearchBar({
   currentView,
   onCreateClick,
+  onSearchValueChange,
   searchValue,
-  setSearchValue,
 }: SearchBarProps) {
   return (
     <div className="flex h-14 fixed bottom-0 left-0 right-0 p-4 bg-base rounded-t-2xl">
@@ -21,7 +21,7 @@ export default function SearchBar({
         <SearchIcon size={20} />
         <input
           className="text-sm/tight placeholder-surface-2 placeholder:italic outline-none w-full"
-          onChange={({ target }) => setSearchValue(target.value)}
+          onChange={({ target }) => onSearchValueChange(target.value)}
           placeholder="Search snippets..."
           type="text"
           value={searchValue}
