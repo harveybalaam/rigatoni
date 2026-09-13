@@ -6,7 +6,6 @@ import registerIpcHandlers from "./ipc/index.ts";
 import {
   DEFAULT_WINDOW_HEIGHT,
   DEFAULT_WINDOW_WIDTH,
-  DEFAULT_WINDOW_OFFSET_Y,
 } from "./constants/window.ts";
 
 const appPath = path.join(app.getAppPath(), "/dist-react/index.html");
@@ -22,7 +21,8 @@ const createWindow = () => {
   // center
   const offsetX = Math.ceil(displaySize.width / 2 - DEFAULT_WINDOW_WIDTH / 2);
 
-  const offsetY = displaySize.height - DEFAULT_WINDOW_OFFSET_Y;
+  // 25% from top of screen
+  const offsetY = Math.round(displaySize.height * 0.25);
 
   const window = new BrowserWindow({
     height: DEFAULT_WINDOW_HEIGHT,
