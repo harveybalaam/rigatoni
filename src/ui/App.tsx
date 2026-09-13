@@ -14,6 +14,7 @@ export default function App() {
   const [isWindowExpanded, setIsWindowExpanded] = useState(false);
   const [snippetIdToEdit, setSnippetIdToEdit] = useState<Snippet["id"]>("");
   const [currentView, setCurrentView] = useState<AppView>("list");
+  const [searchValue, setSearchValue] = useState("");
 
   const { ref, dimensions } = useDimensions();
 
@@ -32,6 +33,21 @@ export default function App() {
   const onEditSnippet = (snippetId: Snippet["id"]) => {
     setSnippetIdToEdit(snippetId);
     setCurrentView("edit");
+  };
+
+  const onCreateSnippet = () => {
+    if (!isWindowExpanded) {
+      setIsWindowExpanded(true);
+    }
+    setCurrentView("create");
+  };
+
+  const onSearchValueChange = (value: string) => {
+    setSearchValue(value);
+
+    if (!isWindowExpanded && value !== "") {
+      setIsWindowExpanded(true);
+    }
   };
 
   const snippetForm =
@@ -67,6 +83,7 @@ export default function App() {
               error={error}
               isPending={isPending}
               onEditSnippet={onEditSnippet}
+              searchValue={searchValue}
               snippets={allSnippets}
             />
           ) : (
@@ -76,9 +93,9 @@ export default function App() {
       )}
       <SearchBar
         currentView={currentView}
-        isWindowExpanded={isWindowExpanded}
-        setCurrentView={setCurrentView}
-        setIsWindowExpanded={setIsWindowExpanded}
+        onCreateClick={onCreateSnippet}
+        onSearchValueChange={onSearchValueChange}
+        searchValue={searchValue}
       />
     </div>
   );
