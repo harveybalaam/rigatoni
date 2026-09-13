@@ -4,24 +4,13 @@ import type { AppView } from "../../App";
 
 interface SearchBarProps {
   currentView: AppView;
-  isWindowExpanded: boolean;
-  setCurrentView: React.Dispatch<React.SetStateAction<AppView>>;
-  setIsWindowExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  onCreateClick: () => void;
 }
 
 export default function SearchBar({
   currentView,
-  isWindowExpanded,
-  setCurrentView,
-  setIsWindowExpanded,
+  onCreateClick,
 }: SearchBarProps) {
-  const handleOnAddButtonClick = () => {
-    if (!isWindowExpanded) {
-      setIsWindowExpanded(true);
-    }
-    setCurrentView("create");
-  };
-
   return (
     <div className="flex h-14 fixed bottom-0 left-0 right-0 p-4 bg-base rounded-t-2xl">
       <span className="flex grow gap-2 items-center text-overlay-1">
@@ -34,7 +23,7 @@ export default function SearchBar({
         <IconButton
           colour="green"
           icon={PlusIcon}
-          onClick={handleOnAddButtonClick}
+          onClick={onCreateClick}
           disabled={currentView !== "list"}
         />
       </span>

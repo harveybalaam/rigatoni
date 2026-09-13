@@ -34,6 +34,13 @@ export default function App() {
     setCurrentView("edit");
   };
 
+  const onCreateSnippet = () => {
+    if (!isWindowExpanded) {
+      setIsWindowExpanded(true);
+    }
+    setCurrentView("create");
+  };
+
   const snippetForm =
     currentView === "edit" ? (
       <UpdateSnippetForm
@@ -74,12 +81,7 @@ export default function App() {
           )}
         </div>
       )}
-      <SearchBar
-        currentView={currentView}
-        isWindowExpanded={isWindowExpanded}
-        setCurrentView={setCurrentView}
-        setIsWindowExpanded={setIsWindowExpanded}
-      />
+      <SearchBar currentView={currentView} onCreateClick={onCreateSnippet} />
     </div>
   );
 }
