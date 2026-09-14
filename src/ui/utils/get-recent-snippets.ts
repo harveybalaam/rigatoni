@@ -17,7 +17,7 @@ export default function getRecentSnippets(snippets: Snippet[]) {
     })
     .sort(
       (a, b) =>
-        new Date(a.dateLastUsed).getTime() - new Date(b.dateLastUsed).getTime(),
+        new Date(b.dateLastUsed).getTime() - new Date(a.dateLastUsed).getTime(),
     )
-    .slice(-2);
+    .slice(0, 2);
 }
