@@ -1,7 +1,4 @@
-import { app, ipcMain, IpcMainInvokeEvent } from "electron";
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
-import { IpcChannelSnippet } from "../../shared/ipc-channel.ts";
+import { IpcMainInvokeEvent } from "electron";
 import {
   CreateSnippetResponse,
   DeleteSnippetResponse,
@@ -10,51 +7,15 @@ import {
   Snippet,
   SnippetContent,
   snippetContentSchema,
-  SnippetCollection,
-  snippetCollectionSchema,
   UpdateSnippetResponse,
   SnippetUpdateBody,
   snippetUpdateBodySchema,
 } from "../../shared/schemas/snippet.ts";
 import validateSender from "../utils/validate-sender.ts";
+import readSnippetsFile from "../utils/read-snippets.ts";
+import writeToSnippetsFile from "../utils/write-snippets.ts";
 
-const snippetsFilePath = path.join(
-  app.getPath("userData"),
-  "rigatoni-snippets",
-  "snippets.json",
-);
-
-async function readSnippetsFile(): Promise<SnippetCollection> {
-  try {
-    const snippetsFileContents = await readFile(snippetsFilePath, {
-      encoding: "utf-8",
-    });
-
-    const parsedContents = JSON.parse(snippetsFileContents);
-    const snippetCollection = snippetCollectionSchema.parse(parsedContents);
-
-    return snippetCollection;
-  } catch (error: unknown) {
-    const err = error instanceof Error ? error : new Error("Unknown error");
-    throw new Error(`Failed to read snippets file: ${err.message}`, {
-      cause: error,
-    });
-  }
-}
-
-async function writeToSnippetsFile(contents: SnippetCollection): Promise<void> {
-  try {
-    const stringifiedContents = JSON.stringify(contents);
-    await writeFile(snippetsFilePath, stringifiedContents);
-  } catch (error: unknown) {
-    const err = error instanceof Error ? error : new Error("Unknown error");
-    throw new Error(`Failed to write to snippets file: ${err.message}`, {
-      cause: error,
-    });
-  }
-}
-
-async function handleCreateSnippet(
+export async function handleCreateSnippet(
   event: IpcMainInvokeEvent,
   snippetContent: SnippetContent,
 ): Promise<CreateSnippetResponse> {
@@ -85,7 +46,7 @@ async function handleCreateSnippet(
   }
 }
 
-async function handleGetSnippetById(
+export async function handleGetSnippetById(
   event: IpcMainInvokeEvent,
   snippetId: Snippet["id"],
 ): Promise<GetSnippetResponse> {
@@ -109,7 +70,7 @@ async function handleGetSnippetById(
   }
 }
 
-async function handleGetAllSnippets(
+export async function handleGetAllSnippets(
   event: IpcMainInvokeEvent,
 ): Promise<GetAllSnippetsResponse> {
   try {
@@ -128,7 +89,7 @@ async function handleGetAllSnippets(
   }
 }
 
-async function handleUpdateSnippetById(
+export async function handleUpdateSnippetById(
   event: IpcMainInvokeEvent,
   snippetBody: SnippetUpdateBody,
   snippetId: Snippet["id"],
@@ -168,7 +129,7 @@ async function handleUpdateSnippetById(
   }
 }
 
-async function handleDeleteSnippetById(
+export async function handleDeleteSnippetById(
   event: IpcMainInvokeEvent,
   snippetId: Snippet["id"],
 ): Promise<DeleteSnippetResponse> {
@@ -193,12 +154,4 @@ async function handleDeleteSnippetById(
   } catch {
     return { success: false };
   }
-}
-
-export default function registerSnippetIpcHandlers() {
-  ipcMain.handle(IpcChannelSnippet.CREATE, handleCreateSnippet);
-  ipcMain.handle(IpcChannelSnippet.GET, handleGetSnippetById);
-  ipcMain.handle(IpcChannelSnippet.GET_ALL, handleGetAllSnippets);
-  ipcMain.handle(IpcChannelSnippet.UPDATE, handleUpdateSnippetById);
-  ipcMain.handle(IpcChannelSnippet.DELETE, handleDeleteSnippetById);
 }

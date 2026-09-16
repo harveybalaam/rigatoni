@@ -1,11 +1,10 @@
-import { BrowserWindow, ipcMain, IpcMainEvent } from "electron";
-import { IpcChannelWindow } from "../../shared/ipc-channel.ts";
+import { BrowserWindow, IpcMainEvent } from "electron";
 import {
   DEFAULT_WINDOW_HEIGHT,
   DEFAULT_WINDOW_WIDTH,
 } from "../constants/window.ts";
 
-function handleSetWindowHeightOffset(
+export default function handleSetWindowHeightOffset(
   event: IpcMainEvent,
   windowHeightOffset: number,
 ) {
@@ -16,8 +15,4 @@ function handleSetWindowHeightOffset(
     DEFAULT_WINDOW_WIDTH,
     DEFAULT_WINDOW_HEIGHT + windowHeightOffset,
   );
-}
-
-export default function registerWindowIpcHandlers() {
-  ipcMain.on(IpcChannelWindow.SET_HEIGHT_OFFSET, handleSetWindowHeightOffset);
 }
