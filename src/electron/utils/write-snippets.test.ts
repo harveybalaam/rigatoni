@@ -49,8 +49,7 @@ describe("Write snippets to file", () => {
   test("Doesn't throw when passed an empty snippet collection", async () => {
     const emptyCollection: SnippetCollection = { snippets: [] };
 
-    const writePromise = writeToSnippetsFile(emptyCollection);
-    await expect(writePromise).resolves.not.toThrow();
+    await expect(writeToSnippetsFile(emptyCollection)).resolves.not.toThrow();
   });
 
   test("Re-throws if writeFile throws an error", async () => {
