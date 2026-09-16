@@ -64,7 +64,7 @@ describe("Read snippets from file", () => {
     expect(parsedSnippetFile?.snippets?.length).toBe(0);
   });
 
-  test("Throws for a file with invalid snippets", async ({ expect }) => {
+  test("Throws for a file with invalid snippets", async () => {
     const nowISO = new Date().toISOString();
 
     const invalidSnippetCollection = {
@@ -90,7 +90,7 @@ describe("Read snippets from file", () => {
     );
   });
 
-  test("Throws for an empty file", async ({ expect }) => {
+  test("Throws for an empty file", async () => {
     vi.mocked(readFile).mockResolvedValueOnce("");
 
     await expect(readSnippetsFile).rejects.toThrow(
@@ -98,7 +98,7 @@ describe("Read snippets from file", () => {
     );
   });
 
-  test("Re-throws if readFile throws an error", async ({ expect }) => {
+  test("Re-throws if readFile throws an error", async () => {
     vi.mocked(readFile).mockRejectedValueOnce(new Error("Test Error"));
 
     await expect(readSnippetsFile).rejects.toThrow(
@@ -106,9 +106,7 @@ describe("Read snippets from file", () => {
     );
   });
 
-  test("Throws an 'Unknown error' if the caught error is not an instance of Error", async ({
-    expect,
-  }) => {
+  test("Throws an 'Unknown error' if the caught error is not an instance of Error", async () => {
     vi.mocked(readFile).mockRejectedValueOnce("Not an instance of Error");
 
     await expect(readSnippetsFile).rejects.toThrow(
