@@ -30,7 +30,7 @@ vi.mock("fs/promises", () => {
 vi.mock("electron", () => {
   return {
     app: {
-      getPath: vi.fn().mockReturnValue("path/test.json"),
+      getPath: vi.fn().mockReturnValue("/test/rigatoni"),
     },
   };
 });
