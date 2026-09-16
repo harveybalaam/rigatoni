@@ -48,7 +48,7 @@ describe("Get recent snippets", () => {
 
     expect(recentSnippets.length).toBe(2);
     expect(recentSnippets.at(0)?.name).toBe("0");
-    expect(recentSnippets.at(1)?.name).toBe("0"); // FIXME
+    expect(recentSnippets.at(1)?.name).toBe("0");
   });
 
   test("Excludes pinned snippets regardless of recency", () => {
