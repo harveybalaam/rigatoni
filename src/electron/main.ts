@@ -31,8 +31,6 @@ const createWindow = () => {
     y: offsetY,
     backgroundColor: "#11111b", // bg-crust
     frame: false,
-    hasShadow: false,
-    transparent: true,
     alwaysOnTop: true,
     acceptFirstMouse: true,
     webPreferences: {
