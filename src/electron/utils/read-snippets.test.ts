@@ -51,7 +51,7 @@ describe("Read snippets from file", () => {
     expect(parsedSnippetFile).toEqual(snippetCollection);
   });
 
-  test("Returns an empty array when there are no snippets in the collection", async () => {
+  test("Returns an empty collection when there are no snippets in the file collection", async () => {
     const emptyCollection: SnippetCollection = {
       snippets: [],
     };
