@@ -53,7 +53,7 @@ describe("Write snippets to file", () => {
     await expect(writePromise).resolves.not.toThrow();
   });
 
-  test("Re-throws if writeFile throws an error", async ({ expect }) => {
+  test("Re-throws if writeFile throws an error", async () => {
     vi.mocked(writeFile).mockRejectedValueOnce(new Error("Test Error"));
 
     await expect(writeToSnippetsFile(snippetCollection)).rejects.toThrow(
@@ -61,9 +61,7 @@ describe("Write snippets to file", () => {
     );
   });
 
-  test("Throws an 'Unknown error' if the caught error is not an instance of Error", async ({
-    expect,
-  }) => {
+  test("Throws an 'Unknown error' if the caught error is not an instance of Error", async () => {
     vi.mocked(writeFile).mockRejectedValueOnce("Not an instance of Error");
 
     await expect(writeToSnippetsFile(snippetCollection)).rejects.toThrow(
