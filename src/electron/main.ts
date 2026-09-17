@@ -38,6 +38,8 @@ const createWindow = () => {
     },
   });
 
+  window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
   if (isDevEnv()) {
     window.loadURL(`http://localhost:${process.env.DEV_SERVER_PORT ?? 5123}/`);
     // window.webContents.openDevTools();
