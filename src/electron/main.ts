@@ -33,12 +33,17 @@ const createWindow = () => {
     frame: false,
     alwaysOnTop: true,
     acceptFirstMouse: true,
+    resizable: !isDevEnv(),
+    type: "panel",
     webPreferences: {
       preload: preloadPath,
     },
   });
 
-  window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  window.setVisibleOnAllWorkspaces(true, {
+    visibleOnFullScreen: true,
+    skipTransformProcessType: true,
+  });
 
   if (isDevEnv()) {
     window.loadURL(`http://localhost:${process.env.DEV_SERVER_PORT ?? 5123}/`);
