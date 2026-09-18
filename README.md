@@ -17,12 +17,12 @@ Copy paste &rarr; copypasta &rarr; pasta &rarr; rigatoni (aka the best pasta sha
 
 <div align="center">
   <div>
-    <img src="docs/assets/collapsed-view.png" width="480" alt="rigatoni app icon"/>
-    <img src="docs/assets/search-results.png" width="480" alt="rigatoni app icon"/>
+    <img src="docs/assets/collapsed-view.png" width="480" alt="rigatoni ui collapsed view"/>
+    <img src="docs/assets/search-results.png" width="480" alt="rigatoni ui search results view"/>
   </div>
   </br>
   <div>
-    <img src="docs/assets/list-view.png" width="480" alt="rigatoni app icon"/>
-    <img src="docs/assets/edit-view.png" width="480" alt="rigatoni app icon"/>
+    <img src="docs/assets/list-view.png" width="480" alt="rrigatoni ui search list view"/>
+    <img src="docs/assets/edit-view.png" width="480" alt="rigatoni ui edit snippet form view"/>
   </div>
 </div>
