@@ -1,7 +1,7 @@
 <div align="center">
-  <h3 align="center">
-    <img src="docs/assets/rigatoni-app-icon.png" width="100" alt="rigatoni app icon"/>
-    <br/>
+  <img src="docs/assets/rigatoni-app-icon.png" width="100" alt="rigatoni app icon"/>
+  <br/>
+  <h3>
     rigatoni
   </h3>
   <p>
