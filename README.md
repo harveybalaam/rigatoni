@@ -68,18 +68,6 @@ In another terminal window, run electron
 npm run dev:electron
 ```
 
-**Building the app for production**
-
-Use `electron-builder` to package the app
-
-```bash
-# macOS with an M-series processor is currently the only supported platform
-# the following will output the built application to /dist
-npm run dist:mac
-```
-
-After building with `electron-builder`, the `/dist` folder will contain both the `.dmg` installer, as well as `rigatoni.app` which you can run directly from `/dist/mac-arm64`
-
 ### Project Structure
 
 ```plaintext
