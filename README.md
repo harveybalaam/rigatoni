@@ -9,6 +9,10 @@
   </p>
 </div>
 
+## What is rigatoni?
+
+rigatoni is an app for collating and managing any 'snippets' of information that often need to be pasted. The rigatoni window opens as an overlay above other apps, including those in fullscreen, to allow quick copying and pasting of items as and when they are needed.
+
 ## Why 'rigatoni'?
 
 Copy paste &rarr; copypasta &rarr; pasta &rarr; rigatoni (aka the best pasta shape).
