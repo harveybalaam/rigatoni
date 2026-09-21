@@ -75,3 +75,53 @@ npm run dist:mac
 ```
 
 After building with `electron-builder`, the `/dist` folder will contain both the `.dmg` installer, as well as `rigatoni.app` which you can run directly from `/dist/mac-arm64`
+
+### Project Structure
+
+```plaintext
+src/
+├── electron/
+│   ├── constants/
+│   │   └── window.ts
+│   ├── ipc/
+│   │   ├── index.ts
+│   │   ├── snippet.ts
+│   │   ├── window.ts
+│   │   └── window.test.ts
+│   ├── utils/
+│   │   ├── example-utility.ts
+│   │   └── example-utility.test.ts
+│   ├── main.ts
+│   ├── preload.cts
+│   └── tsconfig.json
+├── shared/
+│   ├── schemas/
+│   │   └── snippet.ts
+│   ├── types/
+│   │   └── globals.ts
+│   └── ipc-channel.ts
+└── ui/
+    ├── api/
+    │   └── snippet/
+    │       ├── mutations.ts
+    │       └── queries.ts
+    ├── assets/
+    │   └── fonts/
+    │       └── example-font.woff2
+    ├── components/
+    │   ├── ExampleComponent/
+    │   │   └── index.tsx
+    │   └── inputs/
+    │       └── ExampleInput/
+    │           └── index.tsx
+    ├── hooks/
+    │   └── use-dimensions.ts
+    ├── types/
+    │   └── colour.ts
+    ├── utils/
+    │   ├── example-utility.ts
+    │   └── example-utility.test.ts
+    ├── App.tsx
+    ├── index.css
+    └── main.tsx
+```
