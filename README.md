@@ -125,3 +125,7 @@ src/
     ├── index.css
     └── main.tsx
 ```
+
+## License
+
+rigatoni is licensed under the [MIT License](LICENSE)
