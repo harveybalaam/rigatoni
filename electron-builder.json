@@ -1,0 +1,13 @@
+{
+  "appId": "com.harveybalaam.rigatoni",
+  "files": ["dist-electron", "dist-react"],
+  "extraFiles": [
+    {
+      "from": "./LICENSE",
+      "to": "LICENSE"
+    }
+  ],
+  "mac": {
+    "target": "dmg"
+  }
+}
