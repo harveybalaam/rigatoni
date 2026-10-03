@@ -16,7 +16,9 @@
     "test": "vitest",
     "lint": "eslint .",
     "preview": "vite preview",
-    "transpile:electron": "tsc --project src/electron/tsconfig.json"
+    "transpile:electron": "tsc --project src/electron/tsconfig.json",
+    "typecheck:electron": "tsc --noEmit --project src/electron/tsconfig.json",
+    "typecheck:ui": "tsc -b"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
