@@ -59,7 +59,7 @@ npm run build
 Run the Vite dev server
 
 ```bash
-npm run dev:react
+npm run dev:ui
 ```
 
 In another terminal window, run electron

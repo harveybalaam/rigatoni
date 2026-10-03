@@ -6,8 +6,8 @@ export default defineConfig({
     coverage: {
       ...configDefaults.coverage,
       provider: "v8",
-      enabled: true,
       exclude: ["**/dist-*/**"],
+      reporter: ["text"],
     },
     exclude: [...configDefaults.exclude, "**/dist-*/**"],
   },
