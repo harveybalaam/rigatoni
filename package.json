@@ -14,6 +14,7 @@
     "build": "npm run build:vite && npm run build:electron",
     "dist:mac": "npm run build && electron-builder --mac --arm64",
     "test": "vitest",
+    "coverage": "vitest --coverage",
     "lint": "eslint --max-warnings 0",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
